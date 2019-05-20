@@ -1,0 +1,41 @@
+---
+title: "shinyword"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this: 
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+library(forecast)
+library(Quandl)
+
+# NOTE:
+# 1.This is not a static picture.This loads in the data and creates the plot.
+# 2.The code that generates the plot is included and so can be checked/tested to confirm what it is doing?
+# 3.We also have the data that was used so nothing is hidden, everything is shared/trasparent!
+
+temperatures=Quandl("EPI/74")#average global temp data
+temp=temperatures[,2] #picks out the temp data field
+shares=rev(temp) #want to reverse to get increasing
+arima=auto.arima(shares) #auto.arima fits the best ARIMA model
+plot(forecast(arima,h=50))
+#plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
